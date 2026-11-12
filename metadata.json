@@ -1,0 +1,8 @@
+{
+  "name": "NyAnime",
+  "description": "Stream and discover anime with smooth playback, continue watching, watch history, offline downloads, and local library management.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

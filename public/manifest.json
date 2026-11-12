@@ -1,0 +1,25 @@
+{
+  "name": "NyAnime - Watch Anime Free",
+  "short_name": "NyAnime",
+  "description": "Stream and discover anime with smooth playback, continue watching, watch history, offline downloads, and local library management.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0d0d15",
+  "theme_color": "#7c3aed",
+  "categories": ["entertainment", "video"],
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/og-image.png",
+      "sizes": "1200x630",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <title>NyAnime - Watch Anime Free</title>
+    <meta name="description" content="Watch anime in high quality for free. NyAnime brings the best of anime to you with a clean interface and smooth streaming." />
+    <meta name="author" content="NyAnime" />
+    <meta name="theme-color" content="#7c3aed" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <link rel="manifest" href="/manifest.json" />
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="NyAnime - Watch Anime Free" />
+    <meta property="og:description" content="Fast, clean, and beautiful anime streaming experience." />
+    <meta property="og:image" content="https://nyanime-coral.vercel.app/og-image.png" />
+    <meta property="og:url" content="https://nyanime-coral.vercel.app/" />
+    <meta property="og:type" content="website" />
+
+    <!-- Favicon -->
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+
+    <!--
+      Liquid Glass (https://github.com/dashersw/liquid-glass-js) stylesheets.
+      Copied verbatim into public/liquid-glass/ so the library's own class names
+      resolve. The app's surfaces live in src/liquid-glass.css.
+    -->
+    <link rel="stylesheet" href="/liquid-glass/styles.css" />
+    <link rel="stylesheet" href="/liquid-glass/glass.css" />
+    <link rel="stylesheet" href="/liquid-glass/demo.css" />
+    <link rel="stylesheet" href="/liquid-glass/controls.css" />
+  </head>
+
+  <body>
+    <div id="root"></div>
+
+    <!--
+      The vendored controls.js builds its settings panel from this markup at
+      load time and throws if it is missing. The site uses the library's
+      renderer and uniform updater, not its demo panel, so the panel is mounted
+      hidden rather than removed.
+    -->
+    <div id="glass-controls-container" class="glass-controls" hidden>
+      <div id="controls-content" class="controls-content">
+        <h3>Liquid Glass Controls</h3>
+        <div class="control-group">
+          <label>Edge Intensity <span class="control-value" id="edgeValue">0.009</span></label>
+          <input type="range" id="edgeIntensity" min="0" max="0.1" step="0.001" value="0.009" />
+        </div>
+        <div class="control-group">
+          <label>Rim Intensity <span class="control-value" id="rimValue">0.000</span></label>
+          <input type="range" id="rimIntensity" min="0" max="0.2" step="0.001" value="0" />
+        </div>
+        <div class="control-group">
+          <label>Base Intensity <span class="control-value" id="baseValue">0.011</span></label>
+          <input type="range" id="baseIntensity" min="0" max="0.05" step="0.001" value="0.011" />
+        </div>
+        <div class="control-group">
+          <label>Edge Distance <span class="control-value" id="edgeDistValue">0.050</span></label>
+          <input type="range" id="edgeDistance" min="0.05" max="0.5" step="0.01" value="0.05" />
+        </div>
+        <div class="control-group">
+          <label>Rim Distance <span class="control-value" id="rimDistValue">0.500</span></label>
+          <input type="range" id="rimDistance" min="0.1" max="2.0" step="0.05" value="0.5" />
+        </div>
+        <div class="control-group">
+          <label>Base Distance <span class="control-value" id="baseDistValue">0.150</span></label>
+          <input type="range" id="baseDistance" min="0.05" max="0.3" step="0.01" value="0.15" />
+        </div>
+        <div class="control-group">
+          <label>Corner Boost <span class="control-value" id="cornerValue">0.100</span></label>
+          <input type="range" id="cornerBoost" min="0" max="0.1" step="0.001" value="0.1" />
+        </div>
+        <div class="control-group">
+          <label>Ripple Effect <span class="control-value" id="rippleValue">0.280</span></label>
+          <input type="range" id="rippleEffect" min="0" max="0.5" step="0.01" value="0.28" />
+        </div>
+        <div class="control-group">
+          <label>Blur Radius <span class="control-value" id="blurValue">1.000</span></label>
+          <input type="range" id="blurRadius" min="1" max="15" step="0.5" value="1.0" />
+        </div>
+        <div class="control-group">
+          <label>Tint Opacity <span class="control-value" id="tintValue">0.290</span></label>
+          <input type="range" id="tintOpacity" min="0" max="1.0" step="0.01" value="0.29" />
+        </div>
+        <div class="control-group">
+          <label> <input type="checkbox" id="warpToggle" /> Enable Center Warp </label>
+        </div>
+        <div class="control-group">
+          <label> <input type="checkbox" id="hideButtonsToggle" /> Hide All Buttons </label>
+        </div>
+        <div class="control-group control-group-button">
+          <button id="randomizeButton" class="randomize-button">Randomize Glass Effects</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
+    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
+
+    <!--
+      Liquid Glass is now provided by @ybouane/liquidglass (imported via npm
+      in src/lib/liquidGlass.ts). No global scripts needed.
+    -->
+
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
