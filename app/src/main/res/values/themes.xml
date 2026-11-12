@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.NyAnime" parent="Theme.AppCompat.NoActionBar">
+    <style name="Theme.NyAnime" parent="android:Theme.Material.NoActionBar">
         <item name="android:statusBarColor">@color/nyanime_bg</item>
         <item name="android:navigationBarColor">@color/nyanime_bg</item>
         <item name="android:windowBackground">@color/nyanime_bg</item>
