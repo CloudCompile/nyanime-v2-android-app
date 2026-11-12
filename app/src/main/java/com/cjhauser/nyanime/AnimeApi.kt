@@ -97,7 +97,13 @@ object AnimeApi {
             if (root.optBoolean("success", true) == false) {
                 throw ApiError(root.optString("message", "The anime API reported a failure."))
             }
-            return root.optJSONObject("results") ?: JSONObject()
+            return when (val results = root.opt("results")) {
+                is JSONObject -> results
+                // /api/servers/:id answers with a bare array; normalize it so
+                // listPayload() can find it under "data".
+                is JSONArray -> JSONObject().put("data", results)
+                else -> JSONObject()
+            }
         }
     }
 
@@ -138,28 +144,30 @@ object AnimeApi {
     private fun animeAt(arr: JSONArray?, i: Int): Anime {
         val o = arr?.optJSONObject(i) ?: JSONObject()
         val tv = o.optJSONObject("tvInfo")
+        // /api/info carries metadata in an "animeInfo" map instead of tvInfo.
+        val info = o.optJSONObject("animeInfo")
         return Anime(
             id = str(o, "id"),
             dataId = str(o, "data_id", "dataId"),
             title = str(o, "title", "name"),
             japaneseTitle = str(o, "japanese_title", "japaneseTitle"),
             poster = str(o, "poster"),
-            showType = str(tv, "showType").ifBlank { str(o, "showType", "type") },
+            showType = str(tv, "showType").ifBlank { str(o, "showType", "type").ifBlank { str(info, "Type") } },
             sub = num(tv, "sub").toInt(),
             dub = num(tv, "dub").toInt(),
-            eps = num(tv, "eps").toInt(),
-            rating = str(o, "rating"),
+            eps = num(tv, "eps").toInt().let { if (it > 0) it else Regex("\\d+").find(str(info, "Episodes"))?.value?.toIntOrNull() ?: 0 },
+            rating = str(o, "rating").ifBlank { str(info, "Scores") },
             description = str(o, "description", "plot"),
-            duration = str(o, "duration"),
-            status = str(o, "status"),
-            genres = strList(o, "genres"),
-            studios = strList(o, "studios")
+            duration = str(o, "duration").ifBlank { str(info, "Duration") },
+            status = str(o, "status").ifBlank { str(info, "Status") },
+            genres = strList(o, "genres").ifEmpty { strList(info, "Genre") },
+            studios = strList(o, "studios").ifEmpty { strList(info, "Studios") }
         )
     }
 
-    /** Lists hide under different keys per route (data / items / direct array). */
+    /** Lists hide under different keys per route (data / episodes / items / direct array). */
     private fun listPayload(results: JSONObject): JSONArray {
-        for (key in listOf("data", "items", "animes", "results")) {
+        for (key in listOf("data", "episodes", "items", "animes", "results")) {
             val arr = results.optJSONArray(key)
             if (arr != null) return arr
         }
@@ -171,13 +179,17 @@ object AnimeApi {
     fun home(): List<Pair<String, List<Anime>>> {
         val results = get("/api/")
         val rows = mutableListOf<Pair<String, List<Anime>>>()
-        // Known sections first, in a stable order...
+        // Known sections first, in a stable order (keys as the live API names them)...
         val known = listOf(
-            "spotlight" to "Spotlight",
+            "spotlights" to "Spotlight",
             "trending" to "Trending",
             "topAiring" to "Top Airing",
             "mostPopular" to "Most Popular",
+            "mostFavorite" to "Most Favorite",
             "latestEpisode" to "Latest Episodes",
+            "latestCompleted" to "Recently Completed",
+            "topTen" to "Top 10",
+            "today" to "Today",
             "topUpcoming" to "Top Upcoming"
         )
         for ((key, label) in known) {
@@ -207,7 +219,9 @@ object AnimeApi {
 
     fun info(id: String): Anime {
         val results = get("/api/info?id=${java.net.URLEncoder.encode(id, "UTF-8")}")
-        val anime = results.optJSONObject("anime") ?: results
+        // The API nests the entry under "data" — a bare `results` object has no
+        // anime fields, so falling back to it would yield an all-blank Anime.
+        val anime = results.optJSONObject("data") ?: results.optJSONObject("anime") ?: results
         return animeAt(JSONArray().put(anime), 0)
     }
 
