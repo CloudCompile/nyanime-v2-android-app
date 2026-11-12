@@ -107,3 +107,15 @@ MIT License — use freely, just don't forget to give credit!
 
 > _"In a world full of filler episodes, be the main arc."_ — NyAnime 💜
 
+
+## 🤖 Android app
+
+The Android wrapper lives in `app/` and is ready for Google Play packaging:
+
+```sh
+./gradlew :app:bundleRelease
+# -> app/build/outputs/bundle/release/app-release.aab
+```
+
+It loads `https://nyanime.cjhauser.me` with media autoplay, system Downloads
+integration, file uploads, fullscreen video, and proper back navigation.

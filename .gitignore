@@ -29,3 +29,12 @@ dist-ssr
 
 # Agent-local working memory (not part of the project)
 .openhands/
+
+# Gradle / Android
+.gradle/
+build/
+app/build/
+local.properties
+captures/
+*.iml
+.idea

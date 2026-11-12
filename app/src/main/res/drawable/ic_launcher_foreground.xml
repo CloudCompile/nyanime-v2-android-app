@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Crescent moon, scaled into the adaptive-icon safe zone -->
+    <group
+        android:translateX="29"
+        android:translateY="29"
+        android:scaleX="2.1"
+        android:scaleY="2.1">
+        <path
+            android:fillColor="#F5C542"
+            android:pathData="M10 2c-1.82 0-3.53.5-5 1.35C7.99 5.08 10 7.83 10 11s-2.01 5.92-5 7.65C6.47 19.5 8.18 20 10 20c5.52 0 10-4.48 10-10S15.52 2 10 2z" />
+    </group>
+</vector>

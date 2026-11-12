@@ -144,3 +144,17 @@ churns through hundreds of segments. `tools/chrome.mjs` therefore prefers Google
 Chrome. Note that `canPlayType` reports `probably` even in browsers that cannot
 actually decode, so a passing codec probe does not rule this out — check the
 `200 video/mp2t` count in the harness output instead.
+
+## Android app
+
+The `app/` module is the Android build that Google Play packaging consumes
+(it answers "Couldn't read the package name. Set applicationId in
+build.gradle.kts." — that error came from this repo having no Gradle project).
+It is a WebView shell around the deployed SPA at `https://nyanime.cjhauser.me`
+with downloads, file uploads, fullscreen video, and back navigation wired in.
+
+- Application ID: `com.cjhauser.nyanime` (v1.0.0, versionCode 1)
+- minSdk 26 / targetSdk 36, AGP 8.9.1, Gradle 8.11.1 wrapper (committed)
+- Signing: `debug.keystore` at the repo root (both debug and release refer to
+  it). For a real Play upload, use your own upload key with Play App Signing.
+- Build: `./gradlew :app:assembleDebug` (or `bundleRelease` for the .aab)
